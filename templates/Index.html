@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>UFO Sighting Predictor</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://npmcdn.com/flatpickr/dist/themes/dark.css"
+    />
+
+    <style>
+      /* Apply the Orbitron font to specific elements */
+      body,
+      .font-orbitron {
+        font-family: "Orbitron", sans-serif;
+      }
+
+      /* Custom styles for the background and glass effect */
+      body {
+        background-color: #0c0a18;
+        background-image: radial-gradient(
+            white,
+            rgba(255, 255, 255, 0.2) 2px,
+            transparent 40px
+          ),
+          radial-gradient(
+            white,
+            rgba(255, 255, 255, 0.15) 1px,
+            transparent 30px
+          ),
+          radial-gradient(white, rgba(255, 255, 255, 0.1) 2px, transparent 40px),
+          radial-gradient(
+            rgba(255, 255, 255, 0.4),
+            rgba(255, 255, 255, 0.1) 2px,
+            transparent 30px
+          );
+        background-size: 550px 550px, 350px 350px, 250px 250px, 150px 150px;
+        background-position: 0 0, 40px 60px, 130px 270px, 70px 100px;
+      }
+
+      /* Button pulse animation */
+      @keyframes pulse {
+        0%,
+        100% {
+          box-shadow: 0 0 10px #0ea5e9, 0 0 20px #0ea5e9, 0 0 30px #0ea5e9;
+        }
+        50% {
+          box-shadow: 0 0 20px #0ea5e9, 0 0 40px #0ea5e9, 0 0 60px #0ea5e9;
+        }
+      }
+      .animate-pulse-glow {
+        animation: pulse 2s infinite;
+      }
+
+      /* --- Custom Flatpickr Calendar Styling --- */
+      .flatpickr-calendar {
+        background: rgba(15, 23, 42, 0.8); /* slate-900 with opacity */
+        backdrop-filter: blur(10px);
+        border: 1px solid #0ea5e9; /* cyan-500 */
+        border-radius: 0.75rem;
+        font-family: "Orbitron", sans-serif;
+      }
+      .flatpickr-day.selected,
+      .flatpickr-day.startRange,
+      .flatpickr-day.endRange {
+        background: #0ea5e9; /* cyan-500 */
+        border-color: #0ea5e9;
+      }
+      .flatpickr-day:hover {
+        background: rgba(14, 165, 233, 0.3); /* cyan-500 with opacity */
+      }
+      .flatpickr-months .flatpickr-month,
+      .flatpickr-current-month .flatpickr-monthDropdown-months,
+      .numInputWrapper .numInput,
+      .flatpickr-current-month .flatpickr-yearDropdown-years .flatpickr-year {
+        /* Style for year dropdown */
+        color: #e5e7eb; /* gray-200 */
+        font-family: "Orbitron", sans-serif;
+        background: #1f2937; /* gray-800 */
+      }
+      span.flatpickr-weekday {
+        color: #0ea5e9; /* cyan-500 */
+        font-family: "Orbitron", sans-serif;
+      }
+      .flatpickr-time input.flatpickr-hour,
+      .flatpickr-time input.flatpickr-minute {
+        color: #e5e7eb;
+      }
+      .flatpickr-time .flatpickr-am-pm:hover {
+        background: rgba(14, 165, 233, 0.3);
+      }
+      /* Style the dropdown arrows */
+      .flatpickr-months .flatpickr-prev-month,
+      .flatpickr-months .flatpickr-next-month {
+        fill: #0ea5e9; /* cyan-500 */
+      }
+    </style>
+  </head>
+  <body
+    class="font-sans text-gray-200 min-h-screen flex items-center justify-center p-4"
+  >
+    <div class="w-full max-w-2xl">
+      <header class="text-center mb-8">
+        <h1
+          class="text-4xl md:text-5xl font-bold font-orbitron text-cyan-400 tracking-widest text-shadow"
+        >
+          UFO TRACKER
+        </h1>
+        <p class="text-gray-400 mt-2">
+          Project Blue Book: Classified AI Division
+        </p>
+      </header>
+
+      <div
+        class="bg-gray-800 bg-opacity-40 backdrop-blur-md border border-gray-600 rounded-2xl shadow-2xl p-6 md:p-8"
+      >
+        <form action="/" method="POST">
+          <div class="mb-6">
+            <label
+              for="description"
+              class="block mb-2 text-sm font-medium text-cyan-300"
+              >Sighting Description</label
+            >
+            <textarea
+              id="description"
+              name="description"
+              rows="5"
+              class="bg-gray-900 bg-opacity-70 border border-gray-600 text-gray-200 text-sm rounded-lg focus:ring-cyan-500 focus:border-cyan-500 block w-full p-2.5 placeholder-gray-500 transition duration-300"
+              placeholder="e.g., Three bright lights in a triangle formation..."
+              required
+            ></textarea>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+            <div>
+              <label
+                for="sighting_time"
+                class="block mb-2 text-sm font-medium text-cyan-300"
+                >Sighting Time</label
+              >
+              <input
+                type="text"
+                id="sighting_time"
+                name="sighting_time"
+                class="bg-gray-900 bg-opacity-70 border border-gray-600 text-gray-200 text-sm rounded-lg focus:ring-cyan-500 focus:border-cyan-500 block w-full p-2.5 placeholder-gray-500 transition duration-300"
+                placeholder="Select Date and Time"
+                required
+              />
+            </div>
+
+            <div>
+              <label
+                for="duration"
+                class="block mb-2 text-sm font-medium text-cyan-300"
+                >Duration (seconds)</label
+              >
+              <input
+                type="number"
+                id="duration"
+                name="duration"
+                class="bg-gray-900 bg-opacity-70 border border-gray-600 text-gray-200 text-sm rounded-lg focus:ring-cyan-500 focus:border-cyan-500 block w-full p-2.5 placeholder-gray-500 transition duration-300"
+                placeholder="e.g., 180"
+                required
+              />
+            </div>
+          </div>
+
+          <button
+            type="submit"
+            class="w-full text-white bg-cyan-600 hover:bg-cyan-700 focus:ring-4 focus:outline-none focus:ring-cyan-800 font-bold rounded-lg text-lg px-5 py-3 text-center transition-all duration-300 font-orbitron animate-pulse-glow"
+          >
+            PREDICT LOCATION
+          </button>
+        </form>
+      </div>
+
+      <div class="mt-8 text-center">
+        {% if prediction %}
+        <div
+          id="prediction-result"
+          class="bg-green-900 bg-opacity-50 border-2 border-green-500 rounded-xl p-6 max-w-md mx-auto"
+        >
+          <h2
+            class="text-sm uppercase text-green-300 font-orbitron tracking-widest"
+          >
+            Predicted Location
+          </h2>
+          <p class="text-3xl font-bold text-white mt-2">{{ prediction }}</p>
+        </div>
+        {% endif %} {% if error %}
+        <div
+          id="error-message"
+          class="bg-red-900 bg-opacity-50 border-2 border-red-500 rounded-xl p-6 max-w-md mx-auto"
+        >
+          <h2
+            class="text-sm uppercase text-red-300 font-orbitron tracking-widest"
+          >
+            Analysis Failed
+          </h2>
+          <p class="text-lg font-mono text-white mt-2">{{ error }}</p>
+        </div>
+        {% endif %}
+      </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+
+    <script>
+      flatpickr("#sighting_time", {
+        enableTime: true,
+        dateFormat: "Y-m-d H:i", // Format for the backend
+        altInput: true, // Show a user-friendly format
+        altFormat: "F j, Y at h:i K", // The user-friendly format
+        monthSelectorType: "static", // This creates static dropdowns for month and year
+      });
+    </script>
+  </body>
+</html>
